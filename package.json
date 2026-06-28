@@ -1,0 +1,42 @@
+{
+  "name": "eye-safe-writer-vscode",
+  "displayName": "Eye Safe Writer",
+  "description": "VS Code color themes based on the Eye Safe Writer Obsidian theme.",
+  "version": "0.1.0",
+  "publisher": "nicola",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/screamkface/eye-safe-writer-vscode.git"
+  },
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Eye Safe Writer Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Gruvbox Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-gruvbox-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Gruvbox Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-gruvbox-dark-color-theme.json"
+      }
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 # Eye Safe Writer for VS Code
 
-VS Code themes based on the Eye Safe Writer Obsidian theme in this vault.
+VS Code themes based on the
+[Eye Safe Writer Obsidian theme](https://github.com/nicolamoscufo/eye-safe-writer).
 
 Included themes:
 
@@ -9,7 +10,8 @@ Included themes:
 - `Eye Safe Writer Gruvbox Light`
 - `Eye Safe Writer Gruvbox Dark`
 
-The base light/dark themes use the default Salvia palette from `.obsidian/themes/Eye Safe Writer/theme.css`. The Gruvbox variants match the currently enabled Obsidian palette snippet from `.obsidian/appearance.json`.
+The base light/dark themes use the Salvia palette. The Gruvbox variants provide
+warmer alternatives designed for long writing and coding sessions.
 
 ## Paper Grain
 
@@ -23,4 +25,7 @@ Example user setting after installing a CSS loader:
 ]
 ```
 
-To test locally, open `vscode-eye-safe-writer` in VS Code and run the extension host with `F5`, then choose one of the themes from `Preferences: Color Theme`.
+## Local development
+
+Open this repository in VS Code and run the extension host with `F5`, then
+choose one of the themes from `Preferences: Color Theme`.

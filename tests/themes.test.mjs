@@ -14,3 +14,20 @@ test('all variants are well-formed VS Code themes',async()=>{
   assert.ok(/^#[a-f\d]{6}$/i.test(v.colors['editor.foreground']));
  }
 });
+
+test('editor foreground/background satisfy WCAG AA in all 16 variants', async () => {
+ const lum=h=>{
+  const c=h.slice(1).match(/.{2}/g).map(x=>parseInt(x,16)/255)
+   .map(x=>x<=0.04045?x/12.92:((x+0.055)/1.055)**2.4);
+  return .2126*c[0]+.7152*c[1]+.0722*c[2];
+ };
+ const pairs=new Set();
+ for(const x of pkg.contributes.themes){
+  const theme=JSON.parse(await readFile(new URL('../'+x.path.replace(/^\.\//,''),import.meta.url),'utf8'));
+  const fg=theme.colors['editor.foreground'], bg=theme.colors['editor.background'];
+  const a=lum(fg),b=lum(bg);
+  assert.ok((Math.max(a,b)+0.05)/(Math.min(a,b)+0.05)>=4.5,theme.name+' failed AA');
+  pairs.add(fg+':'+bg);
+ }
+ assert.equal(pairs.size,16,'Palette generation must not duplicate Salvia colors');
+});

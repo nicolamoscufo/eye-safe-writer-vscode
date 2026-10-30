@@ -4,5 +4,5 @@
 
 - Added 12 new color themes, completing all eight Eye Safe Writer palettes in light and dark mode.
 - Added cross-repository Obsidian CSS color-token generator and weekly drift checks.
-- Added static schema/metadata tests and corrected canonical repository URL.
+- Added static schema/metadata tests, WCAG AA editor contrast checks for all 16 themes, and corrected canonical repository URL.
 - Kept four existing theme names and selection paths stable.

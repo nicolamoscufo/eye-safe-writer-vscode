@@ -1,0 +1,22 @@
+name: VS Code palette validation
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 7 * * 1'
+jobs:
+  palette-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: nicolamoscufo/eye-safe-writer
+          ref: main
+          path: obsidian-source
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: npm run check:palettes -- --css obsidian-source/theme.css
+      - run: npm test

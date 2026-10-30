@@ -27,12 +27,12 @@
     "dropdown.border": "#3c3836",
     "dropdown.foreground": "#ebdbb2",
     "editor.background": "#2f2f2f",
-    "editor.findMatchBackground": "#fabd2f40",
+    "editor.findMatchBackground": "#fabd2f45",
     "editor.findMatchBorder": "#fabd2f",
     "editor.findMatchHighlightBackground": "#fabd2f26",
     "editor.focusedStackFrameHighlightBackground": "#fe80191a",
     "editor.foreground": "#ebdbb2",
-    "editor.hoverHighlightBackground": "#83a59821",
+    "editor.hoverHighlightBackground": "#83a5981f",
     "editor.inactiveSelectionBackground": "#83a59824",
     "editor.lineHighlightBackground": "#fe80191a",
     "editor.lineHighlightBorder": "#00000000",
@@ -89,13 +89,13 @@
     "input.placeholderForeground": "#928374",
     "inputOption.activeBackground": "#83a59824",
     "inputOption.activeBorder": "#83a598",
-    "list.activeSelectionBackground": "#83a59829",
+    "list.activeSelectionBackground": "#83a59824",
     "list.activeSelectionForeground": "#ebdbb2",
     "list.dropBackground": "#83a59824",
     "list.focusBackground": "#83a59824",
     "list.highlightForeground": "#83a598",
     "list.hoverBackground": "#ebdbb20f",
-    "list.inactiveSelectionBackground": "#83a59821",
+    "list.inactiveSelectionBackground": "#83a5981f",
     "list.inactiveSelectionForeground": "#ebdbb2",
     "menu.background": "#32302f",
     "menu.foreground": "#ebdbb2",
@@ -125,7 +125,7 @@
     "progressBar.background": "#83a598",
     "quickInput.background": "#32302f",
     "quickInput.foreground": "#ebdbb2",
-    "scrollbar.shadow": "#00000052",
+    "scrollbar.shadow": "#00000047",
     "scrollbarSlider.activeBackground": "#92837466",
     "scrollbarSlider.background": "#92837433",
     "scrollbarSlider.hoverBackground": "#9283744d",
@@ -357,7 +357,7 @@
       ],
       "settings": {
         "fontStyle": "italic",
-        "foreground": "#8ec07c"
+        "foreground": "#b8bb26"
       }
     },
     {

@@ -2,12 +2,12 @@
   "name": "eye-safe-writer-vscode",
   "displayName": "Eye Safe Writer",
   "description": "VS Code color themes based on the Eye Safe Writer Obsidian theme.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "nicola",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/screamkface/eye-safe-writer-vscode.git"
+    "url": "https://github.com/nicolamoscufo/eye-safe-writer-vscode.git"
   },
   "engines": {
     "vscode": "^1.84.0"
@@ -36,7 +36,73 @@
         "label": "Eye Safe Writer Gruvbox Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/eye-safe-writer-gruvbox-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer AMOLED Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-amoled-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer AMOLED Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-amoled-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Tokyo Night Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-tokyo-night-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Tokyo Night Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-tokyo-night-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Rose Pine Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-rose-pine-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Rose Pine Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-rose-pine-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Solarized Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-solarized-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Solarized Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-solarized-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Nord Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-nord-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Nord Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-nord-dark-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Cappuccino Light",
+        "uiTheme": "vs",
+        "path": "./themes/eye-safe-writer-cappuccino-light-color-theme.json"
+      },
+      {
+        "label": "Eye Safe Writer Cappuccino Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/eye-safe-writer-cappuccino-dark-color-theme.json"
       }
     ]
+  },
+  "type": "module",
+  "scripts": {
+    "generate:palettes": "node scripts/generate-themes.mjs",
+    "check:palettes": "node scripts/generate-themes.mjs --check",
+    "test": "node --test tests/themes.test.mjs"
   }
 }

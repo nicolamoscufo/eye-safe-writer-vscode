@@ -9,42 +9,46 @@ const source=await readFile(obsidian,'utf8');
 const baseLight=JSON.parse(await readFile(resolve(root,'src/templates/light.json'),'utf8'));
 const baseDark=JSON.parse(await readFile(resolve(root,'src/templates/dark.json'),'utf8'));
 const generateThemes=function generateThemes(source,baseLight,baseDark){
- const variants=[["salvia","", "Salvia"],["gruvbox","gruvbox","Gruvbox"],["amoled","amoled","AMOLED"],["tokyo","tokyo-night","Tokyo Night"],["rosepine","rose-pine","Rose Pine"],["solarized","solarized","Solarized"],["nord","nord","Nord"],["cappuccino","cappuccino","Cappuccino"]];
+ const variants=[["salvia","","Salvia"],["gruvbox","gruvbox","Gruvbox"],["amoled","amoled","AMOLED"],["tokyo","tokyo-night","Tokyo Night"],["rosepine","rose-pine","Rose Pine"],["solarized","solarized","Solarized"],["nord","nord","Nord"],["cappuccino","cappuccino","Cappuccino"]];
  function tokens(mode,variant){
-  const sel=".theme-"+mode+(variant==="salvia"?"":".eye-safe-palette-"+variant);
-  const esc=sel.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-  const match=source.match(new RegExp(esc+"\\s*\\{([\\s\\S]*?)\\n\\}"));
-  if(!match)throw Error("Missing CSS selector: "+sel);
-  return Object.fromEntries([...match[1].matchAll(/(--[\\w-]+):\\s*([^;]+);/g)].map(m=>[m[1],m[2].trim()]));
+  const selector=".theme-"+mode+(variant==="salvia"?"":".eye-safe-palette-"+variant);
+  const escaped=selector.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  const match=source.match(new RegExp(escaped+"\\s*\\{([\\s\\S]*?)\\n\\}"));
+  if(!match)throw Error("Missing palette selector "+selector);
+  const obj=Object.fromEntries([...match[1].matchAll(/(--[\w-]+):\s*([^;]+);/g)].map(m=>[m[1],m[2].trim()]));
+  if(Object.keys(obj).length<50)throw Error("Missing palette tokens for "+selector);
+  return obj;
  }
  function rgb(v){
-  if(/^#[a-f\\d]{6}$/i.test(v))return v.toLowerCase();
-  const m=v.match(/^rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)(?:\\s*,\\s*[\\d.]+)?\\s*\\)$/i);
-  if(m)return "#"+m.slice(1,4).map(x=>Number(x).toString(16).padStart(2,"0")).join("");
+  if(/^#[0-9a-f]{6}$/i.test(v))return v.toLowerCase();
+  if(typeof v==="string" && /^rgba?\(/i.test(v)){
+   const values=v.match(/[0-9]+/g);
+   if(values?.length>=3)return "#"+values.slice(0,3).map(x=>Number(x).toString(16).padStart(2,"0")).join("");
+  }
   return null;
  }
  const outputs={};
- for(const [cssName,slug,label] of variants){
+ for(const [name,slug,label] of variants){
   for(const mode of ["light","dark"]){
-   const original=mode==="light"?baseLight:baseDark;
-   const originalColors=tokens(mode,"salvia"),desired=tokens(mode,cssName);
-   const paletteMap=new Map();
-   for(const [name,old] of Object.entries(originalColors)){
-    const a=rgb(old),b=rgb(desired[name]||"");
-    if(a&&b&&!paletteMap.has(a))paletteMap.set(a,b);
+   const base=mode==="light"?baseLight:baseDark;
+   const src=tokens(mode,"salvia"),dest=tokens(mode,name);
+   const remap=new Map();
+   for(const [k,v] of Object.entries(src)){
+    const a=rgb(v),b=rgb(dest[k]||"");
+    if(a&&b&&!remap.has(a))remap.set(a,b);
    }
-   // Remap the leading RGB in both #RRGGBB and #RRGGBBAA strings, retaining opacity.
-   function recolor(v){
-    if(typeof v==="string")return v.replace(/#[a-f\\d]{6}(?:[a-f\\d]{2})?/gi,color=>{const mapped=paletteMap.get(color.slice(0,7).toLowerCase());return mapped?mapped+color.slice(7):color;});
-    if(Array.isArray(v))return v.map(recolor);
-    if(v&&typeof v==="object")return Object.fromEntries(Object.entries(v).map(([k,x])=>[k,recolor(x)]));
+   function replaceColors(v){
+    if(typeof v==="string")return v.replace(/#[0-9a-f]{6}(?:[0-9a-f]{2})?/gi,c=>{const m=remap.get(c.slice(0,7).toLowerCase());return m?m+c.slice(7):c;});
+    if(Array.isArray(v))return v.map(replaceColors);
+    if(v&&typeof v==="object")return Object.fromEntries(Object.entries(v).map(([k,x])=>[k,replaceColors(x)]));
     return v;
    }
-   const theme=recolor(original);
-   theme.name="Eye Safe Writer "+(cssName==="salvia"?"":label+" ")+(mode==="light"?"Light":"Dark");
+   const theme=replaceColors(base);
+   theme.name="Eye Safe Writer "+(name==="salvia"?"":label+" ")+(mode==="light"?"Light":"Dark");
    theme.type=mode;
-   const filename="themes/eye-safe-writer"+(slug?"-"+slug:"")+"-"+mode+"-color-theme.json";
-   outputs[filename]=JSON.stringify(theme,null,2)+"\\n".replace("\\n","\n");
+   const path="themes/eye-safe-writer"+(slug?"-"+slug:"")+"-"+mode+"-color-theme.json";
+   if(theme.colors["editor.background"]===base.colors["editor.background"] && name!=="salvia")throw Error("Palette did not recolor editor: "+path);
+   outputs[path]=JSON.stringify(theme,null,2)+"\n";
   }
  }
  return outputs;
